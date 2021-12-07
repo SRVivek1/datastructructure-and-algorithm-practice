@@ -10,10 +10,11 @@ package viveksingh.interview.merge;
 /**
 * Merge two sorted arrays.
 */
-
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import viveksingh.interview.utils.Utils;
 
 public class MergeTwoSortedArrays {
 
@@ -25,17 +26,17 @@ public class MergeTwoSortedArrays {
 		// Approach - 1
 		int[] result = mergeSortedArrayBruteForce(sortedArr1, sortedArr2);
 
-		printData(sortedArr1, "Input 1 : ");
-		printData(sortedArr2, "Input 2 : ");
-		printData(result, "Result  : ");
+		Utils.printData(sortedArr1, "Input 1 : ");
+		Utils.printData(sortedArr2, "Input 2 : ");
+		Utils.printData(result, "Result  : ");
 		System.out.println();
 
 		// Approach - 2 - same length input
 		result = mergeSortedArray_using_two_pointers(sortedArr1, sortedArr2);
 
-		printData(sortedArr1, "Input 1 : ");
-		printData(sortedArr2, "Input 2 : ");
-		printData(result, "Result  : ");
+		Utils.printData(sortedArr1, "Input 1 : ");
+		Utils.printData(sortedArr2, "Input 2 : ");
+		Utils.printData(result, "Result  : ");
 		System.out.println();
 		
 		// Approach 2 - variable length input
@@ -43,26 +44,26 @@ public class MergeTwoSortedArrays {
 		int[] arr2 = {4, 6, 30};
 		result = mergeSortedArray_using_two_pointers(arr1, arr2);
 
-		printData(arr1, "Input 1 : ");
-		printData(arr2, "Input 2 : ");
-		printData(result, "Result  : ");
+		Utils.printData(arr1, "Input 1 : ");
+		Utils.printData(arr2, "Input 2 : ");
+		Utils.printData(result, "Result  : ");
 		System.out.println();
 
 		// Approach 2 - variable length input
 		result = mergeSortedArray_using_two_pointers(arr2, arr1);
 
-		printData(arr2, "Input 1 : ");
-		printData(arr1, "Input 2 : ");
-		printData(result, "Result  : ");
+		Utils.printData(arr2, "Input 1 : ");
+		Utils.printData(arr1, "Input 2 : ");
+		Utils.printData(result, "Result  : ");
 		System.out.println();
 
 		
 		// Approach - 3 using SortedSet
 		result = mergeSortedArray_using_sorted_set(sortedArr1, sortedArr2);
 
-		printData(sortedArr1, "Input 1 : ");
-		printData(sortedArr2, "Input 2 : ");
-		printData(result, "Result  : ");
+		Utils.printData(sortedArr1, "Input 1 : ");
+		Utils.printData(sortedArr2, "Input 2 : ");
+		Utils.printData(result, "Result  : ");
 		System.out.println();
 	}
 
@@ -131,9 +132,12 @@ public class MergeTwoSortedArrays {
 		int x = arr1[i];
 		int y = arr2[j];
 
+		// Loop until all the elements in both loops are iterated.
 		while (i < arr1.length || j < arr2.length) {
 
-			if (i < arr1.length && (j >= arr2.length || x <= y)) {
+			// if there's any element left in arr1
+			// (j >= arr2.length || x <= y) -> 
+			if (i < arr1.length && (j >= arr2.length || x <= y) ) {
 				mergedArray[k++] = x;
 				i++;
 				if (i < arr1.length) {
@@ -186,17 +190,5 @@ public class MergeTwoSortedArrays {
 		Arrays.sort(mergedArray);
 
 		return mergedArray;
-	}
-
-	/** Print array content. */
-	public static void printData(int[] arr, String msg) {
-
-		System.out.print(msg);
-
-		System.out.print("[");
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + ", ");
-		}
-		System.out.println("]");
 	}
 }
