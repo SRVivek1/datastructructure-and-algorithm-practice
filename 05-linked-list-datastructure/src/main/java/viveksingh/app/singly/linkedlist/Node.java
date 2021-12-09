@@ -22,6 +22,9 @@ public final class Node<E> {
 		this.next = next;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.element.toString();
+	}
 
 }

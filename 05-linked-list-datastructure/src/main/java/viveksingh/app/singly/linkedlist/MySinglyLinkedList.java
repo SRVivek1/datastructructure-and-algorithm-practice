@@ -156,6 +156,11 @@ public class MySinglyLinkedList<E> {
 	private Node<E> node(int index) {
 
 		Node<E> x = head;
+
+		if (index == 0) {
+			return x;
+		}
+
 		// iterate 1 node behind the given index
 		for (int i = 0; i < index - 1; i++) {
 			x = x.next;
@@ -166,12 +171,112 @@ public class MySinglyLinkedList<E> {
 	/**
 	 * Check if index is valid.
 	 * 
-	 * @param i
+	 * @param index
 	 */
-	private void checkifPositionIndex(int i) {
-		if (!(i >= 0 && i <= size)) {
-			throw new ArrayIndexOutOfBoundsException("Invalid index number : " + i);
+	private void checkifPositionIndex(int index) {
+		if (!(index >= 0 && index <= size)) {
+			throw new ArrayIndexOutOfBoundsException("Invalid index number : " + index);
 		}
+	}
+
+	/**
+	 * Remove given data object.
+	 * 
+	 * @param o
+	 * @return
+	 */
+	public boolean remove(Object o) {
+
+		if (this.head == null) {
+			return false;
+		} else {
+			if (this.head.element == o) {
+
+				this.head = this.head.next;
+				this.size--;
+				return true;
+			}
+		}
+
+		// if Object is null, find first node with null element data
+		if (o == null) {
+			for (Node<E> x = this.head; x != null; x = x.next) {
+				if (x.next.element == null) {
+					unlink(x);
+					return true;
+				}
+			}
+		} else {
+			// iterate and find matching object and remove it
+			for (Node<E> x = this.head; x != null; x = x.next) {
+				if (o.equals(x.next.element)) {
+					unlink(x);
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Unlink given node.
+	 * 
+	 * @param n
+	 */
+	private void unlink(Node<E> n) {
+
+		Node<E> r = n.next;
+		n.next = r.next;
+
+		// If last node
+		if (n.next == null) {
+			tail = n;
+		}
+
+		this.size--;
+	}
+
+	/**
+	 * Remove node on given index.
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public void remove(int index) {
+
+		// verify if valid index
+		checkifElemetIndex(index);
+		if (index == 0) {
+			removeFirst();
+		} else {
+			unlink(node(index));
+		}
+		size--;
+	}
+
+	/**
+	 * Remove first Node
+	 */
+	private void removeFirst() {
+		Node<E> r = this.head;
+		this.head = this.head.next;
+
+		r.element = null;
+		r.next = null;
+
+	}
+
+	/**
+	 * Verify if valid element index
+	 * 
+	 * @param index
+	 */
+	private void checkifElemetIndex(int index) {
+		if (!(index >= 0 && index < size)) {
+			throw new ArrayIndexOutOfBoundsException("Invalid index number : " + index);
+		}
+
 	}
 
 	/**
@@ -200,5 +305,24 @@ public class MySinglyLinkedList<E> {
 		} while (x != null);
 
 		return elements.toString();
+	}
+
+	/**
+	 * Print present details.
+	 * 
+	 * @return
+	 */
+	public String status() {
+		final StringBuilder b = new StringBuilder();
+
+		b.append("Linked List [\n\tSize : " + size() + ",\n\t");
+		b.append("Data : " + this.toString() + "\n\t");
+		b.append("Head : " + this.getHead() + ",\n\t");
+		b.append("Tail : " + this.getTail() + "\n] \n");
+
+		String s = b.toString();
+		System.out.println(s);
+
+		return s;
 	}
 }
